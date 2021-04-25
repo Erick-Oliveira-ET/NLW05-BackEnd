@@ -48,5 +48,13 @@ io.on("connect", (socket) => {
     await messagesService.create({ text, user_id });
 
     console.log(params);
+
+    const allMessages = await messagesService.listByUser(user_id);
+
+    socket.emit("client_list_all_messages", allMessages);
+
+    const allUsers = await connectionsService.findAllWithoutAdmin();
+
+    io.emit("admin_list_all_users", allUsers);
   });
 });
