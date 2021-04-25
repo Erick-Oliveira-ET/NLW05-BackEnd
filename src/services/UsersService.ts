@@ -1,6 +1,5 @@
 import { getCustomRepository, Repository } from "typeorm";
 import { User } from "../entities/User";
-import { SettingsRepository } from "../repositories/SettingsRepository";
 import { UsersRepository } from "../repositories/UsersRepository";
 
 export class UsersService {
@@ -22,5 +21,18 @@ export class UsersService {
     await this.usersRepository.save(users);
 
     return users;
+  }
+
+  async findByEmail(email) {
+    try {
+      console.log("entrou pra achar email");
+      const user = await this.usersRepository.findOne({ email });
+
+      console.log("SAIU pra achar email");
+      return user;
+    } catch (error) {
+      console.log("ERROR pra achar email");
+      console.error(error);
+    }
   }
 }
